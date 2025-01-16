@@ -53,7 +53,7 @@ class Pokemon {
     }
 
     private boolean attack(Pokemon enemy) {
-        int damage = this.getAttack_value() - enemy.getDefense_value();
+        int damage = (this.getAttack_value() - enemy.getDefense_value()) / 2;
 
         System.out.println(this.getName() + " attacked " + enemy.getName() + " for " + damage + " damage!");
         enemy.setHp(enemy.getHp() - damage);
@@ -62,7 +62,7 @@ class Pokemon {
             System.out.println("\n" + enemy.getName() + " has fainted!");
             return false;
         } else {
-            System.out.println(enemy.getName() + "is now at " + enemy.getHp() + " HP!\n");
+            System.out.println(enemy.getName() + " is now at " + enemy.getHp() + " HP!\n");
             return true;
         }
     }
