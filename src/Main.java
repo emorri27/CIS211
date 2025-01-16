@@ -1,12 +1,16 @@
+/*
+Author: Elliott Morris
+Assignment: Module 1, Lab 1: Java Review
+Date: 1/16/2025
+Description: Simulates a battle between two pokemon.
+ */
+
 public class Main {
     public static void main(String[] args) {
         Pokemon raichu = new Pokemon("Raichu", 90, 55, 60);
         Pokemon nidorino = new Pokemon("Nidorino",72, 57, 61);
 
-        Battle battle = new Battle(raichu, nidorino);
-        battle.attack(raichu, nidorino);
-        battle.attack(nidorino, raichu);
-        battle.attack(raichu, nidorino);
+        raichu.challenge(nidorino);
     }
 }
 
@@ -22,6 +26,45 @@ class Pokemon {
         this.attack_value = attack_value;
         this.defense_value = defense_value;
         this.hp = hp;
+    }
+    
+    public void challenge(Pokemon enemy) {
+        System.out.println(this.getName() + " has challenged " + enemy.getName() + "!");
+        System.out.println("The battle has begun!\n");
+
+        int round_counter = 0;
+        Pokemon attacker = null;
+        Pokemon defender = null;
+        boolean challengers_ready = true;
+
+        while (challengers_ready) {
+            System.out.println("Round #" + (round_counter + 1) + ":");
+            if (round_counter % 2 == 0) {
+                attacker = this;
+                defender = enemy;
+            } else if (round_counter % 2 == 1) {
+                attacker = enemy;
+                defender = this;
+            }
+            challengers_ready = attacker.attack(defender);
+            round_counter++;
+        }
+        System.out.println("The battle has ended. " + attacker.getName() + " won the battle!\n");
+    }
+
+    private boolean attack(Pokemon enemy) {
+        int damage = this.getAttack_value() - enemy.getDefense_value();
+
+        System.out.println(this.getName() + " attacked " + enemy.getName() + " for " + damage + " damage!");
+        enemy.setHp(enemy.getHp() - damage);
+        if (enemy.getHp() < 0) {
+            enemy.setHp(0);
+            System.out.println("\n" + enemy.getName() + " has fainted!");
+            return false;
+        } else {
+            System.out.println(enemy.getName() + "is now at " + enemy.getHp() + " HP!\n");
+            return true;
+        }
     }
 
     public String getName() {
@@ -54,38 +97,5 @@ class Pokemon {
 
     public void setHp(Integer hp) {
         this.hp = hp;
-    }
-}
-
-class Battle {
-    private Pokemon pokemon1;
-    private Pokemon pokemon2;
-    private Integer round_counter;
-
-    Battle(Pokemon pokemon1, Pokemon pokemon2) {
-        this.pokemon1 = pokemon1;
-        this.pokemon2 = pokemon2;
-        this.round_counter = round_counter;
-    }
-
-    public void attack(Pokemon pokemon1, Pokemon pokemon2) {
-        pokemon2.setHp(pokemon2.getHp() - (pokemon1.getAttack_value() - pokemon2.getDefense_value()));
-        System.out.println(pokemon2.getName() + "is now at " + pokemon2.getHp() + " HP!");
-    }
-
-    public Pokemon getPokemon1() {
-        return pokemon1;
-    }
-
-    public void setPokemon1(Pokemon pokemon1) {
-        this.pokemon1 = pokemon1;
-    }
-
-    public Pokemon getPokemon2() {
-        return pokemon2;
-    }
-
-    public void setPokemon2(Pokemon pokemon2) {
-        this.pokemon2 = pokemon2;
     }
 }
