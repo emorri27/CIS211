@@ -1,8 +1,11 @@
 /*
+Course: CIS211-400
 Author: Elliott Morris
 Assignment: Module 1, Lab 1: Java Review
 Date: 1/16/2025
 Description: Simulates a battle between two pokemon.
+
+I wrote all the code submitted, and I have provided citations and references where appropriate.
  */
 
 public class Main {
