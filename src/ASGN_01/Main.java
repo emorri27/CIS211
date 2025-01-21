@@ -1,49 +1,98 @@
 package ASGN_01;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 class Main {
     public static void main(String[] args) {
-        String pokemonFile = "src/ASGN_01/resources/pokemon.csv";
-        try {
-            ArrayList<Pokemon> pokemon = getPokemonData(new File(pokemonFile));
-            for (int i = 0; i < pokemon.size(); i++) {
-                System.out.println(pokemon.get(i).toString());
+        ArrayList<Pokemon> pokemon = initializePokedex();
+        initiatePokedex(pokemon);
+    }
+
+    public static void initiatePokedex(ArrayList<Pokemon> pokemon) {
+
+        Scanner keys = new Scanner(System.in);
+
+        Boolean running = true;
+        while (running) {
+            System.out.println("\n###################### POKEDEX MENU ######################");
+            System.out.println("1: Show all pokemon in pokedex.");
+            System.out.println("2: Search for pokemon information by name.");
+            System.out.println("3: Exit program.");
+            System.out.println("Enter choice (1-3):");
+
+            Integer choice = Integer.valueOf(keys.nextLine());
+
+            switch (choice) {
+                case 1:
+                    listPokemon(pokemon);
+                    break;
+                case 2:
+                    System.out.println("Enter pokemon name:");
+                    String name = keys.nextLine();
+                    searchPokemon(pokemon, name);
+                    break;
+                case 3:
+                    System.out.println("Exiting program...");
+                    running = false;
+                    break;
+                default:
+                    System.out.println("Invalid input.");
+                    break;
             }
+        }
+
+
+    }
+
+    static void searchPokemon(ArrayList<Pokemon> pokemon, String name) {
+        for (Pokemon currentPokemen : pokemon) {
+            if (currentPokemen.getName().equals(name)) {
+                System.out.println(currentPokemen.toString());
+            }
+        }
+    }
+    static void listPokemon(ArrayList<Pokemon> pokemon) {
+        for (int i = 0; i < pokemon.size(); i++) {
+            System.out.println(pokemon.get(i).toString());
+        }
+    }
+    static ArrayList<Pokemon> initializePokedex() {
+        String pokemonFile = "src/ASGN_01/resources/pokemon.csv";
+
+        ArrayList<Pokemon> pokemon = new ArrayList<>();
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(pokemonFile));
+            reader.readLine();
+            String pokemonData;
+
+            while ((pokemonData = reader.readLine()) != null) {
+                String[] pokemonDataParts = pokemonData.split(",");
+
+                Pokemon newPokemon = new Pokemon();
+                newPokemon.setName(pokemonDataParts[1]);
+                newPokemon.setType1(pokemonDataParts[2]);
+                newPokemon.setType2(pokemonDataParts[3]);
+                newPokemon.setTotal(Integer.valueOf(pokemonDataParts[4]));
+                newPokemon.setHp(Integer.valueOf(pokemonDataParts[5]));
+                newPokemon.setAttack(Integer.valueOf(pokemonDataParts[6]));
+                newPokemon.setDefense(Integer.valueOf(pokemonDataParts[7]));
+                newPokemon.setSp_attack(Integer.valueOf(pokemonDataParts[8]));
+                newPokemon.setSp_defense(Integer.valueOf(pokemonDataParts[9]));
+                newPokemon.setSpeed(Integer.valueOf(pokemonDataParts[10]));
+                newPokemon.setGeneration(Integer.valueOf(pokemonDataParts[11]));
+                newPokemon.setLegendary(Boolean.valueOf(pokemonDataParts[12]));
+                pokemon.add(newPokemon);
+            }
+            reader.close();
+
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-    }
-
-    static ArrayList<Pokemon> getPokemonData(File pokemonFile) throws IOException {
-        ArrayList<Pokemon> pokemon = new ArrayList<>();
-        BufferedReader reader = new BufferedReader(new FileReader(pokemonFile));
-        reader.readLine();
-        String pokemonData;
-
-        while ((pokemonData = reader.readLine()) != null) {
-            String[] pokemonDataParts = pokemonData.split(",");
-
-            Pokemon newPokemon = new Pokemon();
-            newPokemon.setName(pokemonDataParts[1]);
-            newPokemon.setType1(pokemonDataParts[2]);
-            newPokemon.setType2(pokemonDataParts[3]);
-            newPokemon.setTotal(Integer.valueOf(pokemonDataParts[4]));
-            newPokemon.setHp(Integer.valueOf(pokemonDataParts[5]));
-            newPokemon.setAttack(Integer.valueOf(pokemonDataParts[6]));
-            newPokemon.setDefense(Integer.valueOf(pokemonDataParts[7]));
-            newPokemon.setSp_attack(Integer.valueOf(pokemonDataParts[8]));
-            newPokemon.setSp_defense(Integer.valueOf(pokemonDataParts[9]));
-            newPokemon.setSpeed(Integer.valueOf(pokemonDataParts[10]));
-            newPokemon.setGeneration(Integer.valueOf(pokemonDataParts[11]));
-            newPokemon.setLegendary(Boolean.valueOf(pokemonDataParts[12]));
-            pokemon.add(newPokemon);
-        }
-        reader.close();
         return pokemon;
     }
 }
@@ -179,7 +228,7 @@ class Pokemon {
 
     @Override
     public String toString() {
-        return "Pokemon{" +
+        java.lang.String string = "Pokemon: " +
                 "name='" + name + '\'' +
                 ", type1='" + type1 + '\'' +
                 ", type2='" + type2 + '\'' +
@@ -193,5 +242,6 @@ class Pokemon {
                 ", generation=" + generation +
                 ", legendary=" + legendary +
                 '}';
+        return string;
     }
 }
