@@ -8,6 +8,8 @@ Description: Simulates a battle between two pokemon.
 I wrote all the code submitted, and I have provided citations and references where appropriate.
  */
 
+package LAB_01;
+
 public class Main {
     public static void main(String[] args) {
         Pokemon raichu = new Pokemon("Raichu", 90, 55, 60);
