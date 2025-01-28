@@ -51,6 +51,10 @@ public class StackTest {
         stack3.push(100);
         System.out.println("Stack after pushing: " + stack3);
         System.out.println("Attempting to push full stack: ");
-        stack3.push(200);
+        try {
+            stack3.push(200); // This will throw an exception
+        } catch (IllegalStateException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
