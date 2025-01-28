@@ -2,7 +2,7 @@
 Course: CIS211-400
 Author: Elliott Morris
 Assignment: Module 2, Lab: Array List
-Date: 1/21/2025
+Date: 1/23/2025
 Description: Program defines a DTCCArrayList class for managing integers in a dynamically sized array
 
 I wrote all the code submitted, and I have provided citations and references where appropriate.
