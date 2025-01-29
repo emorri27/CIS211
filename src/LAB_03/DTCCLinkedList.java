@@ -1,3 +1,14 @@
+/*
+Course: CIS211-400
+Author: Elliott Morris
+Assignment: Module 3, Lab: Linked List
+Date: 1/29/2025
+Description: Program defines a DTCCLinkedList class for managing integers in a dynamically sized array
+
+I wrote all the code submitted, and I have provided citations and references where appropriate.
+ */
+
+
 package LAB_03;
 
 public class DTCCLinkedList<T> {
