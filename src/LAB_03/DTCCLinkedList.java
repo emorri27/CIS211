@@ -13,7 +13,7 @@ I wrote all the code submitted, and I have provided citations and references whe
 /*
 Course: CIS211-400
 Author: Elliott Morris
-Assignment: Module 2, Lab: Linked List
+Assignment: Module 3, Lab: Linked List
 Date: 1/28/2025
 Description: Program defines a DTCCArrayList class for managing integers in a dynamically sized array
 
