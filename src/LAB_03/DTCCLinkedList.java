@@ -23,7 +23,7 @@ I wrote all the code submitted, and I have provided citations and references whe
 package LAB_03;
 
 public class DTCCLinkedList<T> {
-    private Node<T> head;
+    private Node head;
     private int size;
 
     DTCCLinkedList() {
@@ -31,9 +31,9 @@ public class DTCCLinkedList<T> {
         this.size = 0;
     }
 
-    class Node<T> {
+    private class Node {
         T data;
-        Node<T> next;
+        Node next;
 
         Node(T item) {
             this.data = item;
@@ -41,7 +41,7 @@ public class DTCCLinkedList<T> {
     }
 
     public void add(T item) {
-        Node<T> node = new Node<T>(item);
+        Node node = new Node(item);
 
         if (head == null) {
             head = node;

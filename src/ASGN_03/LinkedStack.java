@@ -1,55 +1,58 @@
 package ASGN_03;
 
 public class LinkedStack<T> implements Stack<T> {
-    private T[] stack;
-    private int size = 0;
-    private int capacity;
-    private final int DEFAULT_SIZE = 10;
+    private Node head;
+    private int size;
+
+    private class Node {
+        T data;
+        Node next;
+
+        Node(T item) {
+            this.data = item;
+        }
+    }
 
     public LinkedStack() {
-        this.capacity = DEFAULT_SIZE;
-        this.stack = (T[]) new Object[DEFAULT_SIZE];
-    }
-    public LinkedStack(int capacity) {
-        this.capacity = capacity;
-        this.stack = (T[]) new Object[capacity];
+        this.head = null;
+        this.size = 0;
     }
 
     @Override
-    public void push(T item) throws IllegalStateException {
-        if (size >= capacity) {
-            throw new IllegalStateException("Stack is full, can't push new item.");
-        }
-        stack[size] = item;
+    public void push(T item)  {
+        Node node = new Node(item);
+        node.next = head;
+        head = node;
         size++;
     }
 
     @Override
     public T pop() {
-        if (size > 0) {
-            T item = stack[size-1];
-            size--;
-            return item;
-        } else {
+        if (head == null) {
             return null;
         }
+
+        T data = head.data;
+        head = head.next;
+        size--;
+        return data;
     }
 
     @Override
     public T peek() {
-        if (size > 0) {
-            return stack[size-1];
-        } else {
+        if (head == null) {
             return null;
         }
+        return head.data;
     }
 
     @Override
     public boolean isEmpty() {
-        if (size == 0) {
+        if (head == null) {
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     @Override
@@ -61,9 +64,11 @@ public class LinkedStack<T> implements Stack<T> {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("[");
-        for (int i = 0; i < size; i++) {
-            sb.append(stack[i]);
-            if (i < size-1) {
+        Node iterator = head;
+        for (int i = size; i > 0; i--) {
+            sb.append(iterator.data);
+            iterator = iterator.next;
+            if (i != 1) {
                 sb.append(", ");
             }
         }
