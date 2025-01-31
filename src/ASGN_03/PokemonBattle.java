@@ -3,7 +3,8 @@ Course: CIS211-400
 Author: Elliott Morris
 Assignment: Module 3, Assignment: Linked Stack - Pokemon Battle
 Date: 1/31/2025
-Description:
+Description: This program simulates a Pokemon battle using a linked stack.
+Players receive random Pokemon from a CSV file and compete in rounds based on attack and defense stats.
 
 I wrote all the code submitted, and I have provided citations and references where appropriate.
  */
@@ -16,7 +17,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Random;
 
-public class StackTest {
+public class PokemonBattle {
     public static final String POKEMON_FILE = "src/ASGN_03/resources/pokemon.csv";
     public static final LinkedStack<Pokemon> pokemonList = initializePokemon();
 

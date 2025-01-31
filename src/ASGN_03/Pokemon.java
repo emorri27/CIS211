@@ -1,13 +1,3 @@
-/*
-Course: CIS211-400
-Author: Elliott Morris
-Assignment: Module 1, Assignment 1: Java Review, Parsing CSV
-Date: 1/21/2025
-Description: Uses Pokemon data from a CSV file to simulate a pokedex. User can view all pokemon or search pokemon.
-
-I wrote all the code submitted, and I have provided citations and references where appropriate.
- */
-
 package ASGN_03;
 
 class Pokemon {
