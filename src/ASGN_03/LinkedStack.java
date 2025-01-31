@@ -1,5 +1,7 @@
 package ASGN_03;
 
+import LAB_03.DTCCLinkedList;
+
 public class LinkedStack<T> implements Stack<T> {
     private Node head;
     private int size;
@@ -21,8 +23,12 @@ public class LinkedStack<T> implements Stack<T> {
     @Override
     public void push(T item)  {
         Node node = new Node(item);
-        node.next = head;
-        head = node;
+        if (head == null) {
+            head = node;
+        } else {
+            node.next = head;
+            head = node;
+        }
         size++;
     }
 
@@ -75,5 +81,17 @@ public class LinkedStack<T> implements Stack<T> {
         sb.append("]");
 
         return sb.toString();
+    }
+
+    public T get(int index) {
+        if (head == null) {
+            return null;
+        } else {
+            Node iterator = head;
+            for (int i = 0; i < index; i++) {
+                iterator = iterator.next;
+            }
+            return (T) iterator.data;
+        }
     }
 }

@@ -63,7 +63,7 @@ public class DTCCLinkedList<T> {
         } else {
             Node iterator = head;
             for (int i = 0; i < index; i++) {
-                iterator = head.next;
+                iterator = iterator.next;
             }
             return (T) iterator.data;
         }
