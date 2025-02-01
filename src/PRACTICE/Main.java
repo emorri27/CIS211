@@ -4,34 +4,40 @@ This program is just for practicing.
 
 package PRACTICE;
 
+import java.util.Arrays;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println(isPalindrome(141));
+        System.out.println(fizzBuzz(15));
+        System.out.println(fizzBuzz(3));
+        System.out.println(fizzBuzz(7));
+        System.out.println(fizzBuzz(150));
+        System.out.println(fizzBuzz(70));
     }
 
-    public static boolean isPalindrome(int num) {
-        String[] digits = String.valueOf(num).split("");
-        int size = digits.length;
+    public static String fizzBuzz(int num) {
+        String[] output = new String[num];
 
-        switch (size % 2) {
-            case 0:
-                for (int i = 0; i < size; i++) {
-                    for (int j = i + 1; j < size; j++) {
-                        if (digits[i] != digits[j]) {
-                            return false;
-                        }
-                    }
-                }
-            case 1:
-                int middle = (size - 1) / 2;
-                for (int i = 0; i < middle; i++) {
-                    for (int j = size; j > middle; j--) {
-                            if (digits[i] != digits[j]) {
-                                return false;
-                            }
-                    }
-                }
+        for (int i = 0; i < num; i++) {
+            output[i] = String.valueOf(i+1);
         }
-        return true;
+
+        if (num % 3 == 0 && num % 5 == 0) {
+            for (int i = 2; i < num; i = i+3) {
+                output[i] = "Fizz";
+            }
+            for (int i = 2; i < num; i = i+5) {
+                output[i] = "Buzz";
+            }
+        } else if (num % 5 == 0) {
+            for (int i = 2; i < num; i = i+5) {
+                output[i] = "Buzz";
+            }
+        } if (num % 3 == 0) {
+            for (int i = 2; i < num; i = i+3) {
+                output[i] = "Fizz";
+            }
+        }
+        return Arrays.toString(output);
     }
 }
