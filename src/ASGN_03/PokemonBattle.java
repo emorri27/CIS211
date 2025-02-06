@@ -1,10 +1,12 @@
 /*
 Course: CIS211-400
 Author: Elliott Morris
-Assignment: Module 3, Assignment: Linked Stack - Pokemon Battle
-Date: 1/31/2025
+Assignment: Module 3, Assignment: Linked Stack - Pokemon Battle V2.0
+Date: 2/6/2025
 Description: This program simulates a Pokemon battle using a linked stack.
 Players receive random Pokemon from a CSV file and compete in rounds based on attack and defense stats.
+
+* Fixed some very silly issues and inefficiency. Learning from mistakes!
 
 I wrote all the code submitted, and I have provided citations and references where appropriate.
  */
@@ -79,13 +81,13 @@ public class PokemonBattle {
 
         System.out.println("** The program has no user interaction.");
         for (int i = 0; i < size; i++) {
+            // Localizing the Pokemon objects
             Pokemon playerPokemon = player.pop();
             Pokemon computerPokemon = computer.pop();
 
             int playerAtk = playerPokemon.getAttack();
             int computerDfs = computerPokemon.getDefense();
 
-            System.out.println(player.length());
             System.out.println("\nRound #: " + round++);
             System.out.println("Pokemon: " + "name='" + playerPokemon.getName() + '\'' + ", attack=" + playerAtk + ", defense=" + playerPokemon.getDefense() + '}');
             System.out.println("Pokemon: " + "name='" + computerPokemon.getName() + '\'' + ", attack=" + computerPokemon.getAttack() + ", defense=" + computerDfs + '}');
