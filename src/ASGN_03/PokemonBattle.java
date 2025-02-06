@@ -75,15 +75,20 @@ public class PokemonBattle {
     public static void beginBattle(LinkedStack<Pokemon> player, LinkedStack<Pokemon> computer) {
         int round = 1;
         int score = 0;
+        int size = player.length();
 
         System.out.println("** The program has no user interaction.");
-        for (int i = 0; i < player.length(); i++) {
-            int playerAtk = player.get(i).getAttack();
-            int computerDfs = computer.get(i).getDefense();
+        for (int i = 0; i < size; i++) {
+            Pokemon playerPokemon = player.pop();
+            Pokemon computerPokemon = computer.pop();
 
+            int playerAtk = playerPokemon.getAttack();
+            int computerDfs = computerPokemon.getDefense();
+
+            System.out.println(player.length());
             System.out.println("\nRound #: " + round++);
-            System.out.println("Pokemon: " + "name='" + player.get(i).getName() + '\'' + ", attack=" + playerAtk + ", defense=" + player.get(i).getDefense() + '}');
-            System.out.println("Pokemon: " + "name='" + computer.get(i).getName() + '\'' + ", attack=" + computer.get(i).getAttack() + ", defense=" + computerDfs + '}');
+            System.out.println("Pokemon: " + "name='" + playerPokemon.getName() + '\'' + ", attack=" + playerAtk + ", defense=" + playerPokemon.getDefense() + '}');
+            System.out.println("Pokemon: " + "name='" + computerPokemon.getName() + '\'' + ", attack=" + computerPokemon.getAttack() + ", defense=" + computerDfs + '}');
             System.out.println("##### fight! ######");
             if (playerAtk > computerDfs) {
                 System.out.println("Player wins this round.");
