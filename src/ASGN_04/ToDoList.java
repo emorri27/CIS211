@@ -1,8 +1,9 @@
 package ASGN_04;
 
+import java.util.EmptyStackException;
 import java.util.NoSuchElementException;
 
-public interface ToDoList<T> {
+public interface ToDoList {
     void addTask(String task);
     /**
      * Adds a new task to the list. Position designated by the implementation.

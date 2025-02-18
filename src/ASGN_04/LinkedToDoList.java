@@ -1,8 +1,9 @@
 package ASGN_04;
 
+import java.util.EmptyStackException;
 import java.util.NoSuchElementException;
 
-public class LinkedToDoList<T> implements ToDoList<T>{
+public class LinkedToDoList implements ToDoList {
     private Node head;
     private int size;
 
@@ -30,26 +31,37 @@ public class LinkedToDoList<T> implements ToDoList<T>{
 
     @Override
     public void removeTask(String task) throws NoSuchElementException {
-        if (head != null) {
-            if (head.task.equals(task)) {
-                head = head.next;
-            } else {
-                Node iterator = head;
-                while (iterator.next != null) {
-                    if (iterator.next.task.equals(task)) {
-                        iterator.next = iterator.next.next;
-                        break;
-                    }
-                    iterator = iterator.next;
-                }
-            }
+        if (head == null) {
+            throw new NoSuchElementException("Error: List is empty. Nothing to remove.");
         }
+
+        if (head.task.equals(task)) {
+            head = head.next;
+            size--;
+            return;
+        }
+
+        Node iterator = head;
+        while (iterator.next != null) {
+            if (iterator.next.task.equals(task)) {
+                iterator.next = iterator.next.next;
+                size--;
+                return;
+            }
+            iterator = iterator.next;
+        }
+
+        throw new NoSuchElementException("Error: Task '" + task + "' not found in list.");
     }
 
     @Override
     public String toString() {
+        if (head == null) {
+            return "\nTo do list is empty.";
+        }
+
         StringBuilder sb = new StringBuilder();
-        sb.append("To Do List:\n");
+        sb.append("\nTo Do List:\n");
         Node iterator = head;
         while (iterator != null) {
             sb.append(iterator.task + "\n");
@@ -60,5 +72,6 @@ public class LinkedToDoList<T> implements ToDoList<T>{
     @Override
     public void clearAllTasks() {
         head = null;
+        size = 0;
     }
 }
