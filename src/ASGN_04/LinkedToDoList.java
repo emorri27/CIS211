@@ -1,5 +1,7 @@
 package ASGN_04;
 
+import java.util.NoSuchElementException;
+
 public class LinkedToDoList<T> implements ToDoList<T>{
     private Node head;
     private int size;
@@ -27,7 +29,7 @@ public class LinkedToDoList<T> implements ToDoList<T>{
     }
 
     @Override
-    public void removeTask(String task) {
+    public void removeTask(String task) throws NoSuchElementException {
         if (head != null) {
             if (head.task.equals(task)) {
                 head = head.next;

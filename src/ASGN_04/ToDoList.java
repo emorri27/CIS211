@@ -1,5 +1,7 @@
 package ASGN_04;
 
+import java.util.NoSuchElementException;
+
 public interface ToDoList<T> {
     void addTask(String task);
     /**
@@ -7,7 +9,7 @@ public interface ToDoList<T> {
      *
      * @param task A task to be added to the list.
      */
-    void removeTask(String task);
+    void removeTask(String task) throws NoSuchElementException;
     /**
      * Removes the specified task from the list.
      *
