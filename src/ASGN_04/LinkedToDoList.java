@@ -1,6 +1,5 @@
 package ASGN_04;
 
-import java.util.EmptyStackException;
 import java.util.NoSuchElementException;
 
 public class LinkedToDoList implements ToDoList {
@@ -56,16 +55,16 @@ public class LinkedToDoList implements ToDoList {
 
     @Override
     public String toString() {
-        if (head == null) {
-            return "\nTo do list is empty.";
-        }
+        if (head == null) return "\nThe list is empty.";
 
         StringBuilder sb = new StringBuilder();
-        sb.append("\nTo Do List:\n");
+        sb.append("\n=====To Do List=====\n");
         Node iterator = head;
-        while (iterator != null) {
-            sb.append(iterator.task + "\n");
-            iterator = iterator.next;
+        for (int i = size; i > 0; i--) {
+            if (iterator != null) {
+                sb.insert(21, "\n" + i + ": " + iterator.task);
+                iterator = iterator.next;
+            }
         }
         return sb.toString();
     }

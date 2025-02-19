@@ -24,5 +24,4 @@ public interface ToDoList {
     /**
      * Clears all tasks from the list.
      */
-
 }

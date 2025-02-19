@@ -1,11 +1,10 @@
 /*
 Course: CIS211-400
 Author: Elliott Morris
-Assignment: Module 4, Assignment: Linked Stack - Pokemon Battle V2.0
+Assignment: Module 2-4, Assignment: To Do List App
 Date: 2/18/2025
-Description: This program implements a to do list using linked nodes.
-Users can add, remove, view, and clear tasks. The linked list
- allows efficient task management without predefined size limits.
+Description: This program implements a To Do List using linked nodes.
+Users can add, remove, view, and clear tasks.
 
 I wrote all the code submitted, and I have provided citations and references where appropriate.
  */
