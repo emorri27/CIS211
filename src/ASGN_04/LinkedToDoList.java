@@ -60,14 +60,18 @@ public class LinkedToDoList implements ToDoList {
         StringBuilder sb = new StringBuilder();
         sb.append("\n=====To Do List=====\n");
         Node iterator = head;
-        for (int i = size; i > 0; i--) {
-            if (iterator != null) {
-                sb.insert(21, "\n" + i + ": " + iterator.task);
-                iterator = iterator.next;
-            }
-        }
+
+        printTasks(sb, head, size);
+
         return sb.toString();
     }
+
+    private void printTasks(StringBuilder sb, Node node, int index) {
+        if (node == null) return;
+        printTasks(sb, node.next, index - 1);
+        sb.append(index).append(": ").append(node.task).append("\n");
+    }
+
     @Override
     public void clearAllTasks() {
         head = null;
