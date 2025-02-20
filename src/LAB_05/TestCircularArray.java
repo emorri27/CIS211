@@ -2,7 +2,7 @@ package LAB_05;
 
 public class TestCircularArray {
     public static void main(String[] args) {
-        DTCC_CircularArray list = new DTCC_CircularArray(5);
+        DTCC_CircularArray list = new DTCC_CircularArray(10);
 
         list.add(10);
         list.add(20);
@@ -19,6 +19,5 @@ public class TestCircularArray {
         System.out.println("After adding 60: " + list.toString()); // Output: [10, 20, 40, 50, 60]
 
         list.add(70); // Should throw an IllegalStateException
-
     }
 }

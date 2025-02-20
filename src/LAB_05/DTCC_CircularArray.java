@@ -10,8 +10,8 @@ public class DTCC_CircularArray {
     DTCC_CircularArray(int initialCapacity) {
         this.capacity = initialCapacity;
         this.array = new int[initialCapacity];
-        this.front = 1;
-        this.back = 1;
+        this.front = 0;
+        this.back = 0;
         this.size = 0;
     }
 
@@ -21,8 +21,9 @@ public class DTCC_CircularArray {
         size++;
     }
 
-    public int get(int index) {
-        return array[index];
+    public int get(int index) throws IndexOutOfBoundsException {
+        if (index < 0 || index >= size) throw new IndexOutOfBoundsException("Index out of bounds");
+        return array[index+front];
     }
 
     public void remove(int index) {
