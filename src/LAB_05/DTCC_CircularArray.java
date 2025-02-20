@@ -10,14 +10,14 @@ public class DTCC_CircularArray {
     DTCC_CircularArray(int initialCapacity) {
         this.capacity = initialCapacity;
         this.array = new int[initialCapacity];
-        this.front = 0;
-        this.back = 0;
+        this.front = 1;
+        this.back = 1;
         this.size = 0;
     }
 
     public void add(int value) throws IllegalStateException {
         if (size >= capacity) throw new IllegalStateException("Error: Array is full.");
-        array[back++] = value;
+        array[back++%capacity] = value;
         size++;
     }
 
@@ -26,30 +26,20 @@ public class DTCC_CircularArray {
     }
 
     public void remove(int index) {
-        if (index == front) {
-            front++;
-            size--;
-            return;
-        }
+        if (size == 0) return;
 
-        if (index == back) {
-            back--;
-            size--;
-            return;
-        }
-
-        if (index < size/2) {
-            for (int i = front; i < index; i++) {
-                array[i+1] = array[i];
+        if (index+front <= size/2) {
+            for (int i = index+front; i > front; i--) {
+                array[i%capacity] = array[(i-1)%capacity];
             }
             front++;
             size--;
             return;
         }
 
-        if (index >= size/2) {
-            for (int i = index; i < back-1; i++) {
-                array[i] = array[i+1];
+        if (index+front > size/2) {
+            for (int i = index+front; i < back-1; i++) {
+                array[i%capacity] = array[(i+1)%capacity];
             }
             back--;
             size--;
@@ -60,11 +50,9 @@ public class DTCC_CircularArray {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("[");
-        for (int i = front; i < back; i++) {
-            sb.append(array[i]);
-            if (i < back-1) {
-                sb.append(", ");
-            }
+        for (int i = front%capacity; i < back; i++) {
+            sb.append(array[i%capacity]);
+            if (i+1 < back) sb.append(", ");
         }
         sb.append("]");
 
