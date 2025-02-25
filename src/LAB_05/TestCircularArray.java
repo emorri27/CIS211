@@ -2,7 +2,7 @@ package LAB_05;
 
 public class TestCircularArray {
     public static void main(String[] args) {
-        DTCC_CircularArray list = new DTCC_CircularArray(10);
+        DTCC_CircularArray list = new DTCC_CircularArray(5);
 
         list.add(10);
         list.add(20);

@@ -1,3 +1,14 @@
+/*
+Course: CIS211-400
+Author: Elliott Morris
+Assignment: Module 5, Lab: Circular Array
+Date: 2/20/2025
+Description: Program defines a DTCC_CircularArray class that implements a circular array.
+The class includes methods for adding elements, getting elements by index, removing elements, and converting the array to a string representation.
+
+I wrote all the code submitted, and I have provided citations and references where appropriate.
+*/
+
 package LAB_05;
 
 public class DTCC_CircularArray {
@@ -17,43 +28,40 @@ public class DTCC_CircularArray {
 
     public void add(int value) throws IllegalStateException {
         if (size >= capacity) throw new IllegalStateException("Error: Array is full.");
-        array[back++%capacity] = value;
+        array[back] = value;
+        back = (back+1)%capacity;
         size++;
     }
 
     public int get(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index >= size) throw new IndexOutOfBoundsException("Index out of bounds");
-        return array[index+front];
+        return array[(index+front) % capacity];
     }
 
     public void remove(int index) {
         if (size == 0) return;
 
+        int actualIndex = (index+front) % capacity;
         if (index+front <= size/2) {
-            for (int i = index+front; i > front; i--) {
-                array[i%capacity] = array[(i-1)%capacity];
+            for (int i = actualIndex; i != front; i = (i-1+capacity)%capacity) {
+                array[i] = array[(i-1+capacity)%capacity];
             }
-            front++;
-            size--;
-            return;
-        }
-
-        if (index+front > size/2) {
-            for (int i = index+front; i < back-1; i++) {
-                array[i%capacity] = array[(i+1)%capacity];
+            front = (front+1)%capacity;
+        } else {
+            for (int i = actualIndex; i != (back-1+capacity)%capacity; i = (i+1)%capacity) {
+                array[i] = array[(i+1)%capacity];
             }
-            back--;
-            size--;
-            return;
+            back = (back-1+capacity)%capacity;
         }
+        size--;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("[");
-        for (int i = front%capacity; i < back; i++) {
-            sb.append(array[i%capacity]);
-            if (i+1 < back) sb.append(", ");
+        for (int i = 0; i < size; i++) {
+            sb.append(array[(i+front)%capacity]);
+            if (i+1 != size) sb.append(", ");
         }
         sb.append("]");
 
