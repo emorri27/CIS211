@@ -1,9 +1,22 @@
+/*
+Course: CIS211-400
+Author: Elliott Morris
+Assignment: Module 5, Assignment: Circular Array Queue
+Date: 2/25/2025
+Description: This program simulates a Pokemon battle using a circular array queue.
+Players receive a queue of 10 Pokemon and battle based on attack vs defense.
+Tiebreakers continue until a winner is determined.
+
+I wrote all the code submitted, and I have provided citations and references where appropriate.
+*/
+
 package ASGN_05;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -13,10 +26,31 @@ public class PokemonBattle {
     public static final int HAND_SIZE = 10;
 
     public static void main(String[] args) {
-        CircularArrayQueue<Pokemon> playerHand = createHand();
-        CircularArrayQueue<Pokemon> computerHand = createHand();
+        boolean endProgram = false;
+        Scanner keys = new Scanner(System.in);
+        while (!endProgram) {
+            System.out.println("Welcome to the pokemon battle ground.");
+            System.out.println("How many rounds will this be?");
 
-        beginBattle(playerHand, computerHand);
+            try {
+                int rounds = keys.nextInt();
+                if (rounds <= 0) {
+                    System.out.println("Error: Rounds must be greater than 0.");
+                    keys.nextLine();
+                    continue;
+                }
+                beginBattle(rounds);
+            } catch (InputMismatchException e) {
+                System.out.println("Error: Invalid input");
+                keys.nextLine();
+                continue;
+            }
+
+            // continue or end the program
+            System.out.println("Do you want another battle? (1 for yes, any other input will exit the battle)");
+            int choice = keys.nextInt();
+            if (choice != 1) endProgram = true;
+        }
     }
 
     public static Pokemon[] initializePokemon() {
@@ -60,67 +94,113 @@ public class PokemonBattle {
         Random rng = new Random();
 
         for (int i = 0; i < HAND_SIZE; i++) {
-            hand.enqueue(POKEMON_LIST[rng.nextInt(722)]);
+            hand.enqueue(POKEMON_LIST[rng.nextInt(721)]);
         }
         return hand;
     }
 
-    public static void beginBattle(CircularArrayQueue<Pokemon> player, CircularArrayQueue<Pokemon> computer) {
-        boolean gameOver = false;
-        Scanner keys = new Scanner(System.in);
+    public static void beginBattle(int rounds) {
+        CircularArrayQueue<Pokemon> playerHand = createHand();
+        CircularArrayQueue<Pokemon> computerHand = createHand();
 
-        while (!gameOver) {
-            int currentRound = 1;
-            System.out.println("Welcome to the pokemon battle ground.");
-            System.out.println("How many rounds will this be?");
-            int rounds = keys.nextInt();
-            int i = 0;
-            do {
-                // Localizing the Pokemon objects
-                Pokemon playerPokemon = player.dequeue();
-                Pokemon computerPokemon = computer.dequeue();
+        for (int currentRound = 0; currentRound < rounds && !playerHand.isEmpty() && !computerHand.isEmpty(); currentRound++) {
+            // Localizing the Pokemon objects
+            Pokemon playerPokemon = playerHand.dequeue();
+            Pokemon computerPokemon = computerHand.dequeue();
 
-                int playerAtk = playerPokemon.getAttack();
-                int computerDfs = computerPokemon.getDefense();
-
-                System.out.println("\nRound #: " + currentRound++);
-                System.out.println("Pokemon: " + "name='" + playerPokemon.getName() + '\'' + ", attack=" + playerAtk + ", defense=" + playerPokemon.getDefense() + '}');
-                System.out.println("Pokemon: " + "name='" + computerPokemon.getName() + '\'' + ", attack=" + computerPokemon.getAttack() + ", defense=" + computerDfs + '}');
-                System.out.println("##### fight! ######");
-                if (playerAtk > computerDfs) {
-                    System.out.println("Player wins this round.");
-                    player.enqueue(playerPokemon);
-                    player.enqueue(computerPokemon);
-                } else if (playerAtk == computerDfs) {
-                    System.out.println("It's a tie!");
-                    player.enqueue(playerPokemon);
-                    computer.enqueue(computerPokemon);
-                } else {
-                    System.out.println("Computer wins this round.");
-                    computer.enqueue(computerPokemon);
-                    computer.enqueue(playerPokemon);
-                }
-                System.out.println("Player has " + player.length() + " cards left.");
-                System.out.println("Computer has " + computer.length() + " cards left.");
-                i++;
-            } while (i < rounds && !player.isEmpty() && !computer.isEmpty());
-            System.out.println("\n\n\nPlayer has " + player.length() + " cards left.");
-            System.out.println("Computer has " + computer.length() + " cards left.");
-            if (player.length() > computer.length()) {
-                System.out.println("Player wins!");
-            } else if (player.length() < computer.length()) {
-                System.out.println("Computer wins!");
-            } else {
-                System.out.println("The battle ended in a tie!");
-            }
-            System.out.println("Do you want another battle? (1 for yes, any other input will exit the battle)");
-            int choice = keys.nextInt();
-            switch (choice) {
+            System.out.println("\nRound #: " + (currentRound+1));
+            int winner = fight(playerPokemon, computerPokemon);
+            switch (winner) {
                 case 1:
+                    playerHand.enqueue(playerPokemon);
+                    playerHand.enqueue(computerPokemon);
                     break;
-                default:
-                    gameOver = true;
+                case 2:
+                    CircularArrayQueue<Pokemon> tiePool = new CircularArrayQueue<>(20);
+                    tiePool.enqueue(playerPokemon);
+                    tiePool.enqueue(computerPokemon);
+                    boolean tieResolved = false;
+
+                    while (!tieResolved) {
+                        if (playerHand.isEmpty()) {
+                            System.out.println("Player ran out of cards. Computer wins the tie pool.");
+                            while (!tiePool.isEmpty()) {
+                                computerHand.enqueue(tiePool.dequeue());
+                            }
+                            break;
+                        } else if (computerHand.isEmpty()) {
+                            System.out.println("Computer ran out of cards. Player wins the tie pool.");
+                            while (!tiePool.isEmpty()) {
+                                playerHand.enqueue(tiePool.dequeue());
+                            }
+                            break;
+                        }
+
+                        Pokemon playerTieBreaker = playerHand.dequeue();
+                        Pokemon computerTieBreaker = computerHand.dequeue();
+                        tiePool.enqueue(playerTieBreaker);
+                        tiePool.enqueue(computerTieBreaker);
+
+                        int tieResult = fight(playerTieBreaker, computerTieBreaker);
+
+                        if (tieResult == 1) {
+                            System.out.println("Player wins the tiebreaker and collects the tie pool.");
+                            while (!tiePool.isEmpty()) {
+                                playerHand.enqueue(tiePool.dequeue());
+                            }
+                            tieResolved = true;
+                        } else if (tieResult == 3) {
+                            System.out.println("Computer wins the tiebreaker and collects the tie pool.");
+                            while (!tiePool.isEmpty()) {
+                                computerHand.enqueue(tiePool.dequeue());
+                            }
+                            tieResolved = true;
+                        } else {
+                            System.out.println("Another tie! Continuing tie breaker...");
+                        }
+                    }
+                    break;
+                case 3:
+                    computerHand.enqueue(computerPokemon);
+                    computerHand.enqueue(playerPokemon);
+                    break;
             }
+
+            // updates card counts displayed
+            System.out.println("Player has " + playerHand.length() + " cards left.");
+            System.out.println("Computer has " + computerHand.length() + " cards left.");
+        }
+
+        // display final card counts and winner
+        System.out.println("\n\n\nPlayer has " + playerHand.length() + " cards left.");
+        System.out.println("Computer has " + computerHand.length() + " cards left.");
+        if (playerHand.length() > computerHand.length()) {
+            System.out.println("Player wins!");
+        } else if (playerHand.length() < computerHand.length()) {
+            System.out.println("Computer wins!");
+        } else {
+            System.out.println("The battle ended in a tie!");
+        }
+    }
+
+    public static int fight(Pokemon playerPokemon, Pokemon computerPokemon) {
+
+        int playerAtk = playerPokemon.getAttack();
+        int computerDfs = computerPokemon.getDefense();
+
+        System.out.println("Pokemon: " + "name='" + playerPokemon.getName() + '\'' + ", attack=" + playerAtk + ", defense=" + playerPokemon.getDefense() + '}');
+        System.out.println("Pokemon: " + "name='" + computerPokemon.getName() + '\'' + ", attack=" + computerPokemon.getAttack() + ", defense=" + computerDfs + '}');
+        System.out.println("##### fight! ######");
+
+        if (playerAtk > computerDfs) {
+            System.out.println("Player wins this round.");
+            return 1;
+        } else if (playerAtk == computerDfs) {
+            System.out.println("It's a tie!");
+            return 2;
+        } else {
+            System.out.println("Computer wins this round.");
+            return 3;
         }
     }
 }
