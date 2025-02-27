@@ -1,10 +1,19 @@
-package PRACTICE;
+package LAB_06;
 
 import java.util.NoSuchElementException;
 
 public class DoublyLinkedList<T> {
     private Node head, tail;
     private int count = 0;
+
+    private static class Node<T> {
+        private Node prev, next;
+        private T data;
+
+        Node(T data) {
+            this.data = data;
+        }
+    }
 
     public boolean add(T item) {
         Node node = new Node(item);
@@ -40,14 +49,5 @@ public class DoublyLinkedList<T> {
             }
         }
         count--;
-    }
-
-    class Node {
-        private Node prev, next;
-        private T data;
-
-        Node(T data) {
-            this.data = data;
-        }
     }
 }

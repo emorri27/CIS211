@@ -1,12 +1,6 @@
-/*
-This program is just for practicing.
- */
+package LAB_06;
 
-package PRACTICE;
-
-import LAB_06.DoublyLinkedList;
-
-public class Main {
+public class TestDoublyLinkedLIst {
     public static void main(String[] args) {
         DoublyLinkedList dll = new DoublyLinkedList();
         dll.add("A");
