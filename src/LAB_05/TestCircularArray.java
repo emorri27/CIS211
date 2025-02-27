@@ -9,7 +9,7 @@ public class TestCircularArray {
         list.add(30);
         list.add(40);
         list.add(50);
-
+        System.out.println(list.get(0));
         System.out.println("List: " + list.toString()); // Output: [10, 20, 30, 40, 50]
 
         list.remove(2); // Removes element 30 and shifts accordingly

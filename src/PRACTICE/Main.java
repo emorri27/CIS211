@@ -4,17 +4,15 @@ This program is just for practicing.
 
 package PRACTICE;
 
-import LAB_06.DoublyLinkedList;
-
-public class Main {
-    public static void main(String[] args) {
-        DoublyLinkedList dll = new DoublyLinkedList();
-        dll.add("A");
-        dll.add("B");
-        dll.add("C");
-        dll.add("D");
-        dll.add("E");
-
-        dll.remove(1);
-    }
-}
+//public class Main {
+//    public static void main(String[] args) {
+//        DTCCDoublyLinkedList dll = new DTCCDoublyLinkedList();
+//        dll.add("A");
+//        dll.add("B");
+//        dll.add("C");
+//        dll.add("D");
+//        dll.add("E");
+//
+//        dll.remove(1);
+//    }
+//}
