@@ -10,7 +10,7 @@ public class DequeDoublyLinkedList<E> implements Deque<E> {
     }
 
     private static class Node<E> {
-        private Node prev, next;
+        private Node<E> prev, next;
         private E data;
 
         public Node(E data) {
@@ -21,7 +21,7 @@ public class DequeDoublyLinkedList<E> implements Deque<E> {
     }
     @Override
     public void addBack(E it) throws IllegalStateException {
-        Node node = new Node(it);
+        Node<E> node = new Node<>(it);
         if (head == null) {
             head = tail = node;
         } else {
@@ -34,7 +34,7 @@ public class DequeDoublyLinkedList<E> implements Deque<E> {
 
     @Override
     public void addFront(E it) throws IllegalStateException {
-        Node node = new Node(it);
+        Node<E> node = new Node<>(it);
         if (head == null) {
             head = tail = node;
         } else {
